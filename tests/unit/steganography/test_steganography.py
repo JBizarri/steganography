@@ -38,9 +38,7 @@ def test_encode_and_decode_with_path_for_decoding(tmp_folder, test_image, random
         assert result == word
 
 
-def test_encode_and_decode_without_path_for_decoding(
-    tmp_folder, test_image, random_words
-):
+def test_encode_and_decode_without_path_for_decoding(test_image, random_words):
     # ARRANGE
     for word in random_words:
         s = Steganography(test_image)
