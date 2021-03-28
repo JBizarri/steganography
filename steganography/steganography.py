@@ -1,3 +1,4 @@
+import pathlib
 import re
 
 from PIL import Image
@@ -56,13 +57,24 @@ class Steganography:
 
         return self._binary_string_to_str(binary_string)
 
-    def save(self, path: str, original_image: bool = False) -> None:
-        if not original_image and self._encoded_image is not None:
+    def save(self, path: str) -> None:
+        path = self._path_as_png(path)
+
+        if self._encoded_image:
             self._encoded_image.save(path)
-        elif not original_image and self._encoded_image is None:
-            print("Error! Image was not encoded yet.")
         else:
-            self._original_image.save(path)
+            print("Error! Image was not encoded yet.")
+
+    @staticmethod
+    def _path_as_png(filepath):
+        path = pathlib.Path(filepath)
+        if path.is_dir():
+            raise IsADirectoryError(path)
+
+        suffixes = "".join(path.suffixes)
+        filename = filepath.rsplit(suffixes, 1)[0]
+
+        return filename + ".png"
 
     @staticmethod
     def _str_to_binary_string(string: str) -> str:
