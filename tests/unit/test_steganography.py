@@ -1,4 +1,5 @@
 import os
+import string
 
 import pytest
 
@@ -10,20 +11,42 @@ def test_image():
     return "./resources/apyr.jpg"
 
 
-def test_encode_and_decode(tmp_folder, test_image):
+@pytest.fixture
+def random_words(random):
+    def random_word():
+        letters = string.ascii_lowercase
+        length = random.randint(10, 80)
+        return "".join(random.choice(letters) for _ in range(length))
+    
+    return [random_word() for _ in range(10)]
+
+
+def test_encode_and_decode_with_path_for_decoding(tmp_folder, test_image, random_words):
     # ARRANGE
-    s = Steganography(test_image)
+    for idx, word in enumerate(random_words):
+        s = Steganography(test_image)
+        
+        # ACT
+        s.encode(word)
 
-    text = "Here's the text that should be hidden in the image"
+        tmp_file = os.path.join(tmp_folder, f"image{idx}.jpg")
+        s.save(tmp_file)
 
-    # ACT
-    s.encode(text)
+        result = s.decode(tmp_file.replace("jpg", "png"))
 
-    tmp_file = os.path.join(tmp_folder, "image.jpg")
-    s.save(tmp_file)
+        # ASSERT
+        assert result == word
 
-    result = s.decode(tmp_file.replace("jpg", "png"))
 
-    # ASSERT
+def test_encode_and_decode_without_path_for_decoding(tmp_folder, test_image, random_words):
+    # ARRANGE
+    for word in random_words:
+        s = Steganography(test_image)
+        
+        # ACT
+        s.encode(word)
+        result = s.decode()
 
-    assert result.startswith(text)
+        # ASSERT
+        assert result == word
+

@@ -1,3 +1,5 @@
+import time
+from random import Random
 from shutil import rmtree
 from tempfile import mkdtemp
 
@@ -17,3 +19,10 @@ def cleanup(request):
         rmtree(TMP_FOLDER)
 
     request.addfinalizer(remove_tmp_dir)
+
+
+@pytest.fixture(scope="session")
+def random():
+    seed = time.time()
+    print("Random Seed:", seed)
+    return Random()
