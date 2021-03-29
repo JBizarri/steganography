@@ -1,4 +1,4 @@
-from steganography.steganography import Steganography
+from steganography import Steganography
 
 
 def main():

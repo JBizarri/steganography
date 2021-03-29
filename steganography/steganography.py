@@ -48,7 +48,8 @@ class Steganography:
         """Decode image and returns the hidden message
 
         Args:
-            path (str, optional): Path of the image, if not specified uses the encoded image from self. Defaults to None.
+            path (str, optional): Path of the image, if not specified uses the encoded
+            image from self. Defaults to None.
 
         Returns:
             str: Decoded message
@@ -178,7 +179,8 @@ class Steganography:
                 filepath_without_extension = filepath.rsplit(suffixes, 1)[0]
             else:
                 print(
-                    f"Can't determine if {filepath} is a directory or file. Assuming it's a file!"
+                    f"Can't determine if {filepath} is a directory or file."
+                    + " Assuming it's a file!"
                 )
                 filepath_without_extension = filepath
 
