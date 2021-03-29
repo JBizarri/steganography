@@ -19,9 +19,9 @@ This code will take any text and put it inside a image.
 
 ## Usage
 
->Warning: This project is currently being developed on Python 3.8.5 and Ubuntu 20.04.2 LTS, any other enviroment may not work properly.
+>This project is currently being developed on Python 3.8.5 and Ubuntu 20.04.2 LTS, any other enviroment may not work properly.
 
-Currently we can only run the `stenography/main.py` directly (But we have plans for a CLI), and to do so you should follow the steps below:
+Currently we can only run the `stenography/main.py` directly (But we have plans for a CLI). If you wish to run an example you should follow the steps below:
 
 Install poetry:
 
@@ -41,7 +41,7 @@ Activate the virtualenv
 
 Install requirements with poetry:
 
-`$ poetry install`
+`$ poetry install --no-dev`
 
 Run:
 
@@ -52,6 +52,8 @@ You should see "Sample text" printed on your console.
 ## Contributing
 
 If you wish to contribute you can have a look at our [CONTRIBUTING.md](CONTRIBUTING.md) for a more detailed guideline.
+
+Please run `$ poetry install` for the development dependencies and `$ poetry run pre-commit install` for the pre-commit hooks. This way tox will run everytime you try to make a commit and check for any linting, formatting and testing errors.
 
 When making a Pull Request:
 

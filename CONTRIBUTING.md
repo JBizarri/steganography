@@ -6,11 +6,24 @@ This is project is really simple (and not inovative at all 😅) and is being de
 
 All the usage is on the [README](https://github.com/JBizarri/steganography/blob/master/README.md) file.
 
-## Testing
+## Development
 
-We have a PyTest as our testing framework. All tests are inside the `tests` folder and we use the same structure as the main code for easily finding where the tested file is.
+>We currently develop only in Python 3.8.X
 
-We also use `tox` to automate linting, formatting and testing. We recommend you to run the `tox` command before commiting.
+First you should clone or fork the repository. Then create and activate a virtualenv to install all dependencies by running the following command inside the newly created steganography folder:
+
+`$ python3 -m virtualenv venv && source venv/bin/activate`
+
+Install the dependecies with `poetry install` ([Poetry documentation](https://python-poetry.org/docs/)) and don't forget to install the pre-commit hooks by running `poetry run pre-commit install`.
+We use `tox` together with `pre-commit` to automate checks for linting, formatting, testing and generating documentation.
+
+We use PyTest as our testing framework. All tests are inside the `tests` folder and we use the same structure as the main code for easily finding where the tested file is. For instance the test file for `steganography/steganography.py` code is inside `tests/steganography/test_steganography.py`.
+
+We use Flake8 for linting and Black for formatting code.
+
+We use pdoc3 for generating our documentation with a custom template inside `docs/templates/text.mako`.
+
+> For a more detailed view of the CI check out the [tox.ini](tox.ini) file
 
 ## Submitting changes
 
