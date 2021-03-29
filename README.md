@@ -9,6 +9,14 @@ This code will take any text and put it inside a image.
 
 >Disclaimer: It is NOT recommended using this if you intend to actually hide text inside an image as it's not really hard to decode the message.
 
+## Table of contents
+
+1. [Steganography](#Steganography)
+2. [Table of contents](#Table-of-contents)
+3. [Usage](#Usage)
+4. [Contributing](#Contributing)
+5. [How it works](#How-it-works)
+
 ## Usage
 
 >Warning: This project is currently being developed on Python 3.8.5 and Ubuntu 20.04.2 LTS, any other enviroment may not work properly.
