@@ -6,7 +6,16 @@ from PIL import Image
 
 
 class Steganography:
+    """Steganography class responsible for hiding text inside images"""
+
     def __init__(self, path: str, end: str = None) -> None:
+        """Initialize the class
+
+        Args:
+            path (str): Path to the image that will hide the text
+            end (str, optional): End characters to know when to stop
+            decoding. Defaults to "\\end".
+        """
         self._original_image = Image.open(path)
 
         self._encoded_image = None
