@@ -6,42 +6,62 @@ A simple steganography algorithm. This is project is really simple (and not inov
 
 This code will take any text and put it inside a image.
 
->Disclaimer: it is NOT recommended using this if you intend to actually hide text inside an image as it's not really hard to decode the message.
+>Disclaimer: It is NOT recommended using this if you intend to actually hide text inside an image as it's not really hard to decode the message.
 
-## Run working example
+## Usage
 
-Create a virtual environment
+>Warning: This project is currently being developed on Python 3.8.5 and Ubuntu 20.04.2 LTS, any other enviroment may not work properly.
 
-`python3 -m virtualenv venv`
+Currently we can only run the `stenography/main.py` directly (But we have plans for a CLI), and to do so you should follow the steps below:
 
-Install requirements
+Install poetry:
 
-`pip3 install -r requirements.txt`
+[https://python-poetry.org/docs/](https://python-poetry.org/docs/)
 
-Run
+Clone the repository and go inside it:
 
-`python3 main.py`
+`git clone https://github.com/JBizarri/steganography.git && cd steganography`
 
-You should see `Sample text` printed on your console.
+Create a virtual environment:
+
+`$ python3 -m virtualenv venv`
+
+Install requirements with poetry:
+
+`$ poetry install`
+
+Run:
+
+`$ python3 steganography/main.py`
+
+You should see "Sample text" printed on your console.
+
+## Contributing
+
+If you wish to contribute you can have a look at our [CONTRIBUTING.md](CONTRIBUTING.md) for a more detailed guideline.
+
+When making a Pull Request:
+
+- If you added new features you should also add tests for them.
+- Be sure every file is following our code conventions and all tests are fine by running `tox`. Otherwise we won't be able to merge your PR.
+- Update any documentation such as doctstrings, this README file and any other relevant file.
 
 ## How it works
 
 1. Convert each letter from the secret message to ASCII code, the word "Dog" for example:
 
     - D: 68
-
     - o: 111
-
     - g: 103
 
-2. Convert each ASCII code to binary, following the last example:
+2. Convert each ASCII code to binary, following the last example we have:
 
     - 68: &nbsp;01000100
-
     - 111: 01101111
-
     - 103: 01100111
 
-3. Change the least significative bit for every pixel in the image to the bits from your message.
+3. Repeat step 2 for the RGB values of a pixel (e.g rgb(255, 255, 255)).
+
+4. Change the least significant bit from the pixel to the first three values from step 2 (010, letter "D" from ASCII code 68). Then move to the next pixel and repeat the operation until the whole message has been written.
 
 ![Steganography Process](./docs/resources/steganography.png)
