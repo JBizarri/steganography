@@ -1,3 +1,4 @@
+import os
 import pathlib
 import re
 
@@ -31,7 +32,7 @@ class Steganography:
                 new_pixel = self._write_to_lsb(tribit, rgb_binary)
 
                 if len(new_pixel) < 3:
-                    new_pixel = self._complete_new_pixel(new_pixel, rgb_binary)
+                    new_pixel = self._complete_list(new_pixel, list(rgb_binary))
 
                 pixels[x_pixel, y_pixel] = self._binary_to_rgb(*new_pixel)
 
@@ -115,31 +116,33 @@ class Steganography:
         return [string[start : start + n] for start in range(0, len(string), n)]
 
     @staticmethod
-    def _complete_new_pixel(new_pixel: list, old_pixel: tuple):
-        """Completes new_pixel with values from old_pixel
+    def _complete_list(to_complete: list, from_complete: list):
+        """Completes to_complete with values from from_complete
 
-        If new_pixel has 1 elements and old_pixel as 3, new_pixel will
-        use the second and third element from old_pixel so it also has
+        If to_complete has 1 elements and from_complete as 3, to_complete will
+        use the second and third element from from_complete so it also has
         3 elements.
 
         Args:
-            new_pixel (list): List with RGB values for a pixel
-            old_pixel (tuple): List with RGB values for a pixel
+            to_complete (list): List with RGB values for a pixel
+            from_complete (list): List with RGB values for a pixel
 
         Returns:
-            list: New pixel with the same length as old_pixel using the
+            list: New pixel with the same length as from_complete using the
             latter's values to complete any missing element.
         """
-        if len(new_pixel) < len(old_pixel):
-            new_pixel_ = list(new_pixel).copy()
+        to_complete_ = list(to_complete).copy()
+        from_complete_ = list(from_complete).copy()
 
-            n_missing_elements = len(old_pixel) - len(new_pixel_)
-            start = -1
-            end = (n_missing_elements + 1) * -1
-            for i in range(start, end, -1):
-                new_pixel_.append(old_pixel[i])
+        if len(to_complete_) < len(from_complete_):
 
-        return new_pixel_
+            n_missing_elements = len(from_complete_) - len(to_complete_)
+            start = n_missing_elements * -1
+            end = 0
+            for i in range(start, end):
+                to_complete_.append(from_complete_[i])
+
+        return to_complete_
 
     @staticmethod
     def _path_as_png(filepath: str):
@@ -154,14 +157,32 @@ class Steganography:
         Returns:
             str: filepath with png as extension.
         """
+        if filepath.strip() == "":
+            raise ValueError("filepath can't be an empty string.")
         path = pathlib.Path(filepath)
-        if path.is_dir():
-            raise IsADirectoryError(path)
-
         suffixes = "".join(path.suffixes)
-        filename = filepath.rsplit(suffixes, 1)[0]
 
-        return filename + ".png"
+        if os.path.exists(filepath):
+            if os.path.isfile(filepath):
+                if suffixes:
+                    filepath_without_extension = filepath.rsplit(suffixes, 1)[0]
+                else:
+                    filepath_without_extension = filepath
+            else:
+                raise IsADirectoryError(filepath)
+        else:
+            if filepath.endswith(os.sep):
+                raise IsADirectoryError(filepath)
+
+            if suffixes:
+                filepath_without_extension = filepath.rsplit(suffixes, 1)[0]
+            else:
+                print(
+                    f"Can't determine if {filepath} is a directory or file. Assuming it's a file!"
+                )
+                filepath_without_extension = filepath
+
+        return filepath_without_extension + ".png"
 
     @staticmethod
     def _str_to_binary_string(string: str) -> str:
@@ -249,7 +270,7 @@ class Steganography:
             green = args[1]
             blue = args[2]
         else:
-            ValueError(
+            raise ValueError(
                 "Arguments must be RGB tuple or Red, Green, Blue as 3 arguments."
             )
 
