@@ -21,11 +21,15 @@ Install poetry:
 
 Clone the repository and go inside it:
 
-`git clone https://github.com/JBizarri/steganography.git && cd steganography`
+`$ git clone https://github.com/JBizarri/steganography.git && cd steganography`
 
 Create a virtual environment:
 
 `$ python3 -m virtualenv venv`
+
+Activate the virtualenv
+
+`$ source venv/bin/activate`
 
 Install requirements with poetry:
 
