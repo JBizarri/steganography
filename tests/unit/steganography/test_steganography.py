@@ -1,5 +1,6 @@
 import os
 import string
+from unittest.mock import MagicMock
 
 import pytest
 
@@ -49,6 +50,36 @@ def test_encode_and_decode_without_path_for_decoding(test_image, random_words):
 
         # ASSERT
         assert result == word
+
+
+def test_save_successful(test_image, tmp_folder):
+    # ARRANGE
+    s = Steganography(test_image)
+    s.encode("doesnt matter")
+
+    mock_png_path = os.path.join(tmp_folder, "save_sucess.png")
+    s._path_as_png = MagicMock(return_value=mock_png_path)
+
+    # ACT
+    s.save(mock_png_path)
+
+    # ASSERT
+    assert os.path.exists(mock_png_path)
+
+
+def test_save_not_successful(test_image, tmp_folder):
+    # ARRANGE
+    s = Steganography(test_image)
+
+    mock_png_path = os.path.join(tmp_folder, "save_not_sucessful.png")
+    s._path_as_png = MagicMock()
+
+    # ACT
+    s.save(mock_png_path)
+
+    # ASSERT
+    assert not os.path.exists(mock_png_path)
+    s._path_as_png.assert_not_called()
 
 
 def test_write_to_lsb(test_image):
@@ -173,11 +204,11 @@ def test_complete_list_to_complete_gt_from_complete(test_image):
 
 def test_path_as_png_if_jpg_file(test_image, tmp_folder):
     # ARRANGE
-    mocked_filepath = os.path.join(tmp_folder, "some_file.jpg")
+    mocked_filepath = os.path.join(tmp_folder, "some_jpg_file.jpg")
     with open(mocked_filepath, "w") as f:
         f.write("")
 
-    expected_result = os.path.join(tmp_folder, "some_file.png")
+    expected_result = os.path.join(tmp_folder, "some_jpg_file.png")
 
     # ACT
     result = Steganography(test_image)._path_as_png(mocked_filepath)
@@ -188,11 +219,11 @@ def test_path_as_png_if_jpg_file(test_image, tmp_folder):
 
 def test_path_as_png_if_two_extensions(test_image, tmp_folder):
     # ARRANGE
-    mocked_filepath = os.path.join(tmp_folder, "some_file.tar.gz")
+    mocked_filepath = os.path.join(tmp_folder, "some_targz_file.tar.gz")
     with open(mocked_filepath, "w") as f:
         f.write("")
 
-    expected_result = os.path.join(tmp_folder, "some_file.png")
+    expected_result = os.path.join(tmp_folder, "some_targz_file.png")
 
     # ACT
     result = Steganography(test_image)._path_as_png(mocked_filepath)
@@ -208,6 +239,27 @@ def test_path_as_png_if_empty_path(test_image):
     # ACT / ASSERT
     with pytest.raises(ValueError):
         Steganography(test_image)._path_as_png(mocked_filepath)
+
+
+def test_path_as_png_if_file_exists_but_no_extension(test_image, tmp_folder):
+    # ARRANGE
+    mocked_filepath = os.path.join(tmp_folder, "some_file_without_extension")
+    with open(mocked_filepath, "w") as f:
+        f.write("")
+
+    expected_result = os.path.join(tmp_folder, "some_file_without_extension.png")
+
+    # ACT
+    result = Steganography(test_image)._path_as_png(mocked_filepath)
+
+    # ASSERT
+    assert result == expected_result
+
+
+def test_path_as_png_if_directory_exists(test_image, tmp_folder):
+    # ARRANGE / ACT / ASSERT
+    with pytest.raises(IsADirectoryError):
+        Steganography(test_image)._path_as_png(tmp_folder)
 
 
 def test_path_as_png_when_path_does_not_exist_and_is_directory(test_image):
