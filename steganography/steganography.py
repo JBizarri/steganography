@@ -86,9 +86,8 @@ class Steganography:
         Args:
             path (str): path to save image.
         """
-        path = self._path_as_png(path)
-
         if self._encoded_image:
+            path = self._path_as_png(path)
             self._encoded_image.save(path)
         else:
             print("Error! Image was not encoded yet.")
