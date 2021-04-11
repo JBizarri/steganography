@@ -1,4 +1,5 @@
 # Steganography
+
 [![CI](https://github.com/JBizarri/steganography/actions/workflows/on_push_and_pull_request.yaml/badge.svg?branch=master)](https://github.com/JBizarri/steganography/actions/workflows/on_push_and_pull_request.yaml) [![CodeQL](https://github.com/JBizarri/steganography/actions/workflows/codeql-analysis.yml/badge.svg?branch=master)](https://github.com/JBizarri/steganography/actions/workflows/codeql-analysis.yml)
 
 A simple steganography algorithm. This is project is really simple (and not inovative at all 😅) and is being developed for fun on my free time only, as of consequence is not intented to be complex or extensive.
@@ -45,7 +46,7 @@ Install requirements with poetry:
 
 Run:
 
-`$ python3 steganography/main.py`
+`$ python3 examples/encode_and_decode.py`
 
 You should see "Sample text" printed on your console.
 
