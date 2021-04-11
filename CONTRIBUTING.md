@@ -17,7 +17,7 @@ First you should clone or fork the repository. Then create and activate a virtua
 Install the dependecies with `poetry install` ([Poetry documentation](https://python-poetry.org/docs/)) and don't forget to install the pre-commit hooks by running `poetry run pre-commit install`.
 We use `tox` together with `pre-commit` to automate checks for linting, formatting, testing and generating documentation.
 
-We use PyTest as our testing framework. All tests are inside the `tests` folder and we use the same structure as the main code for easily finding where the tested file is. For instance the test file for `steganography/steganography.py` code is inside `tests/steganography/test_steganography.py`.
+We use PyTest as our testing framework. All tests are inside the `steganography/tests` folder and we use the same structure as the main code for easily finding where the tested file is. For instance the test file for `steganography/steganography.py` code is inside `tests/unit/steganography/test_steganography.py`.
 
 We use Flake8 for linting and Black for formatting code.
 
@@ -41,11 +41,11 @@ Always write a clear log message for your commits. One-line messages are fine fo
 
 Start reading our code and you'll get the hang of it. We optimize for readability:
 
-  * We indent using four spaces
-  * We follow PEP8 naming convetion
-  * We use Black (default settings) to format our code
-  * We use Flake8 for linting, excluding a few rules, such as "E203" and "W503". Any future exclusions will be added to the [tox.ini](tox.ini) file.
-  * This is open source software. Consider the people who will read your code, and make it look nice for them.
+* We indent using four spaces
+* We follow PEP8 naming convetion
+* We use Black (default settings) to format our code
+* We use Flake8 for linting, excluding a few rules, such as "E203" and "W503". Any future exclusions will be added to the [tox.ini](tox.ini) file.
+* This is open source software. Consider the people who will read your code, and make it look nice for them.
 
 And again, thank your being interested in Steganography. ❤
 

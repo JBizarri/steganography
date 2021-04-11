@@ -1,7 +1,3 @@
-# Resources except example image
-resources/*
-!resources/apyr.png
-
 # Editors
 .vscode/
 .idea/

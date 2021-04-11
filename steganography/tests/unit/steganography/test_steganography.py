@@ -4,12 +4,12 @@ from unittest.mock import MagicMock
 
 import pytest
 
-from steganography.steganography import Steganography
+from steganography import Steganography
 
 
 @pytest.fixture
 def test_image():
-    return "./resources/apyr.jpg"
+    return "./steganography/tests/resources/apyr.jpg"
 
 
 @pytest.fixture
